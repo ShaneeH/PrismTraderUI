@@ -4,7 +4,7 @@
     <div class="tabs-container">
       <n-tabs type="segment" animated>
         <!-- Coins Tab -->
-        <n-tab-pane name="Coins" tab="Coins 🪙">
+        <n-tab-pane name="Coins" tab="COINS">
           <div>
             <div v-for="coin in coins" :key="coin.id" class="coin">
               <img :src="coin.image" :alt="coin.name" class="coin-image" />
@@ -17,7 +17,7 @@
         </n-tab-pane>
 
         <!-- Active Trades Tab -->
-        <n-tab-pane name="Active Trades" tab="Active Trades ⌛">
+        <n-tab-pane name="Active Trades" tab="Active Trade Orders">
           <div>
             <div v-if="activeOrders.length > 0">
               <div v-for="order in activeOrders" :key="order.id" class="order">
@@ -31,7 +31,7 @@
         </n-tab-pane>
 
         <!-- History Tab -->
-        <n-tab-pane name="History" tab="History 🕰️">
+        <n-tab-pane name="History" tab="History">
           <div>
             <div v-if="orderHistory.length > 0">
               <div v-for="history in orderHistory" :key="history.id" class="history">
