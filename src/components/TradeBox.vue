@@ -1,19 +1,23 @@
 <template>
   <div>
-    <h5>Connected Wallet:</h5>
-    <h6>{{ ca }}</h6>
+    <h2>Connected Wallet:</h2>
+    <h3>{{ ca }}</h3>
 
-    <button @click="handleDisconnect" style="font-weight: bold;">[ Disconnect ]</button>
+    <button @click="handleDisconnect" style="font-weight: bold;"><h2>[ Disconnect ]</h2></button>
 
     <br><br>
 
 
 
     <div v-if="loading">Loading...</div>
-    <div v-if="error" style="color: red;">Error: {{ error }}</div>
+    <div v-if="error" style="color: wheat;">
+      <h3>Apologies 😟</h3>
+      <h4>Server Seems Busy Please wait a few seconds then reload the page</h4>
+      <h4>In the meantime all you're Wallet Information is safe</h4>
+    </div>
 
     <br>
-    <h3>Your Wallet's Coins on DexScreener</h3>
+    <h1>Your Wallet's Coins on DexScreener</h1>
     <br>
     <v-list v-if="items.length > 0" class="custom-list">
     <div class="list-container">

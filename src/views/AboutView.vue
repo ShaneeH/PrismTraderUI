@@ -1,61 +1,59 @@
 <template>
-  <v-card class="custom-card">
-    <v-tabs
-      v-model="tab"
-      bg-color="deep-purple-darken-4"
-      center-active
-    >
-      <v-tab>Coins</v-tab>
-      <v-tab>Active Order</v-tab>
-      <v-tab>Order History</v-tab>
-    </v-tabs>
+  <br />
+  <n-config-provider :theme="darkTheme" :theme-overrides="themeOverrides">
+    <div class="tabs-container">
+      <n-tabs type="segment" animated>
+        <!-- Coins Tab -->
+        <n-tab-pane name="Coins" tab="Coins 🪙">
+          <div>
+            <div v-for="coin in coins" :key="coin.id" class="coin">
+              <img :src="coin.image" :alt="coin.name" class="coin-image" />
+              <div class="coin-details">
+                <h3>{{ coin.name }}</h3>
+                <p>{{ coin.symbol }}</p>
+              </div>
+            </div>
+          </div>
+        </n-tab-pane>
 
-    <!-- Coins Tab -->
-    <v-tab-item v-if="tab === 0">
-      <v-list class="coin-list">
-        <v-list-item v-for="coin in coins" :key="coin.id">
-          <v-list-item-avatar>
-            <v-img :src="coin.image" alt="coin image" />
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>{{ coin.name }}</v-list-item-title>
-            <v-list-item-subtitle>{{ coin.symbol }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-tab-item>
+        <!-- Active Trades Tab -->
+        <n-tab-pane name="Active Trades" tab="Active Trades ⌛">
+          <div>
+            <div v-if="activeOrders.length > 0">
+              <div v-for="order in activeOrders" :key="order.id" class="order">
+                <p><strong>Coin:</strong> {{ order.coin }}</p>
+                <p><strong>Amount:</strong> {{ order.amount }}</p>
+                <p><strong>Status:</strong> {{ order.status }}</p>
+              </div>
+            </div>
+            <p v-else>No active trades found.</p>
+          </div>
+        </n-tab-pane>
 
-    <!-- Active Order Tab -->
-    <v-tab-item v-if="tab === 1">
-      <v-list class="order-list">
-        <v-list-item v-for="order in activeOrders" :key="order.id">
-          <v-list-item-content>
-            <v-list-item-title>{{ order.coin }} - {{ order.amount }} units</v-list-item-title>
-            <v-list-item-subtitle>Status: {{ order.status }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-tab-item>
-
-    <!-- Order History Tab -->
-    <v-tab-item v-if="tab === 2">
-      <v-list class="order-history-list">
-        <v-list-item v-for="order in orderHistory" :key="order.id">
-          <v-list-item-content>
-            <v-list-item-title>{{ order.coin }} - {{ order.amount }} units</v-list-item-title>
-            <v-list-item-subtitle>Status: {{ order.status }} | Date: {{ order.date }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-tab-item>
-  </v-card>
+        <!-- History Tab -->
+        <n-tab-pane name="History" tab="History 🕰️">
+          <div>
+            <div v-if="orderHistory.length > 0">
+              <div v-for="history in orderHistory" :key="history.id" class="history">
+                <p><strong>Coin:</strong> {{ history.coin }}</p>
+                <p><strong>Amount:</strong> {{ history.amount }}</p>
+                <p><strong>Status:</strong> {{ history.status }}</p>
+                <p><strong>Date:</strong> {{ history.date }}</p>
+              </div>
+            </div>
+            <p v-else>No history available.</p>
+          </div>
+        </n-tab-pane>
+      </n-tabs>
+    </div>
+  </n-config-provider>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { darkTheme } from 'naive-ui';
 
-const tab = ref(0); // Set initial tab to "Coins"
-
+// Dummy data
 const coins = [
   { id: 1, name: 'Bitcoin', symbol: 'BTC', image: 'https://pump.mypinata.cloud/ipfs/QmSptKUKxpJ62pQWPFDUAaNS8wbpWoZrmCv916B6BptZ29?img-width=256&img-dpr=2&img-onerror=redirect' },
   { id: 2, name: 'Ethereum', symbol: 'ETH', image: 'https://pump.mypinata.cloud/ipfs/QmSptKUKxpJ62pQWPFDUAaNS8wbpWoZrmCv916B6BptZ29?img-width=256&img-dpr=2&img-onerror=redirect' },
@@ -77,25 +75,44 @@ const orderHistory = [
 </script>
 
 <style scoped>
-.custom-card {
-  background-color: #1a1a1a; /* Dark background for card */
-  color: #c3cdd8; /* Light text color */
+/* Container for the tabs */
+.tabs-container {
+  max-width: 1000px; /* Adjust this value to control the width */
+  margin: 0 auto; /* Centers the container */
+  padding: 10px;
 }
 
-.coin-list,
-.order-list,
-.order-history-list {
-  text-align: left; /* Align items to the left */
-  margin-left: 20px;
+/* Media query for smaller screens */
+@media (max-width: 1040px) {
+  .tabs-container {
+    max-width: 100%; /* Full width on smaller screens */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
 }
 
-.v-list-item-avatar {
+/* Coin styling */
+.coin {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+.coin-image {
+  width: 40px;
+  height: 40px;
   margin-right: 10px;
+  border-radius: 50%;
+}
+.coin-details {
+  display: flex;
+  flex-direction: column;
 }
 
-.v-img {
-  width: 40px; /* Adjust image size */
-  height: 40px; /* Adjust image size */
-  object-fit: cover; /* Ensures the image covers the area */
+/* Order and history styling */
+.order, .history {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 </style>

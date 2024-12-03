@@ -35,7 +35,7 @@ onMounted(() => {
   // Check device type and set the banner image accordingly
   const device = localStorage.getItem('device');
   if (device !== 'mobile') {
-    banner.value = require('@/assets/banner.png');  // Use require() for dynamic imports
+    banner.value = require('@/assets/banner_desktop.png');  // Use require() for dynamic imports
   } else if (device === 'mobile') {
     banner.value = require('@/assets/banner_mobile.png');  // Path to mobile banner
   }
