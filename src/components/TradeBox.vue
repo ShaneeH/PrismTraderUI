@@ -14,7 +14,7 @@
 
     <br>
     <h3>Your Wallet's Coins on DexScreener</h3>
-    <br><br>
+    <br>
     <v-list v-if="items.length > 0" class="custom-list">
     <div class="list-container">
       <v-list-item v-for="(item, index) in items" :key="index" class="list-item">
@@ -66,7 +66,8 @@ const fetchTokens = async () => {
 
   try {
     items.value = await getCoins(ca); // Use the service function
-    console.log(items.value);
+    
+    console.log(JSON.stringify(items.value, null, 2)); 
   } catch (err) {
     error.value = err.message; // Store error message in the state
     console.error('Error:', err);
@@ -78,35 +79,7 @@ const fetchTokens = async () => {
 fetchTokens();
 </script>
 
+
 <style scoped>
-.custom-list {
-  padding: 0;
-  background-color: inherit; /* Matches the rest of the template's background */
-}
-
-.list-container {
-  display: flex; /* Flex layout for horizontal alignment */
-  flex-wrap: wrap; /* Allows wrapping to the next line if necessary */
-  gap: 16px; /* Add space between items */
-  margin-left: 40px;
-  margin-right: 40px;
-
-}
-
-.list-item {
-  flex: 1 1 calc(25% - 16px); /* Adjust width dynamically (25% width, minus gap space) */
-  max-width: 250px; /* Optional: Limit the maximum width for each item */
-  background-color: rgb(27, 29, 41); /* Light background for contrast */
-  border-radius: 50px; /* Rounded corners */
-  border: 0.8px solid white; /* White border around each item */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for each card */
-  padding: 16px;
-  color :rgba(255, 255, 255, 0.773)
-}
-
-.item-image {
-  width: 40px; /* Smaller image size */
-  height: 40px; /* Smaller image size */
-  object-fit: cover; /* Ensures the image scales well */
-}
+@import '@/styles/TradeBox.css';  
 </style>

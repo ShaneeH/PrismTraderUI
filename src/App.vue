@@ -1,5 +1,8 @@
 
 <template>
+  <head>
+    <link rel="icon" src="@/assets/prism.ico" type="image/x-icon">
+  </head>
   
   <nav>
     <router-link to="/">Home</router-link> |
@@ -22,6 +25,9 @@ window.mobileCheck = function() {
 };
 
 onMounted(() => {
+  
+  document.title = "Prism Trader";
+
   if (window.mobileCheck()) {
     localStorage.setItem('device' , 'mobile');
 
@@ -36,7 +42,7 @@ onMounted(() => {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Exo 2', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -49,11 +55,11 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #c1c9d1;
+  color: #414141;
 }
 
 nav a.router-link-exact-active {
-  color: #e15e2e;
+  color: rgba(235, 235, 235, 0.641);
 }
 
 body{
