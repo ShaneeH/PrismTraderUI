@@ -1,6 +1,6 @@
 <template>
   <div class="connected-wallet">
-    <h3> {{ ca_short }} </h3>
+    <h3> {{ ca_short }}.. </h3>
     <img src="@/assets/dog.png" alt="Dog" class="wallet-icon">
 
   </div>
@@ -14,15 +14,23 @@
         <n-tab-pane name="Coins" tab="COINS">
           <div class="coin-list">
             <div v-for="(item, index) in items" :key="index" class="coin">
-              <img :src="item.img" :alt="item.name" class="coin-image" />
-              <div class="coin-details">
+              <div class="coin-header">
+                <img :src="item.img" :alt="item.name" class="coin-image" />
                 <h3 class="coin-name">{{ item.name }}</h3>
+              
+              </div>
+              <div class="coin-details">
+
+                <h5> ${{ item.balance }}</h5>
                 <p><strong>Price:</strong> ${{ item.price }}</p>
                 <p><strong>Market Cap:</strong> ${{ item.mc }}</p>
                 <p><strong>Quantity:</strong> {{ item.qty }}</p>
+                
+
               </div>
             </div>
           </div>
+
         </n-tab-pane>
 
         <n-tab-pane name="Active Trades" tab="Active Trade Orders">
@@ -61,7 +69,7 @@ import { darkTheme } from 'naive-ui';
 // Props
 const props = defineProps(['ca']);
 const ca = props.ca;
-const ca_short = ca.slice(0, 10);
+const ca_short = ca.slice(0, 14);
 
 // Emit event to trigger disconnection in the parent component
 const emit = defineEmits();
@@ -126,19 +134,17 @@ onMounted(() => {
 .coin-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 15px;
   margin: 20px 0;
 }
 
 .coin {
   display: flex;
   flex-direction: column;
-  align-items: center;
   background-color: #2d2d2d;
   border-radius: 8px;
-  padding: 15px;
+  padding: 10px;
   transition: transform 0.2s, box-shadow 0.2s;
-  text-align: center;
   color: white;
 }
 
@@ -147,30 +153,52 @@ onMounted(() => {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.coin-image {
-  width: 50px;
-  height: 50px;
+.coin-header {
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
+}
+
+
+
+.coin-image {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 2px solid #ffffff;
+  margin-right: 10px;
+}
+
+.coin-name {
+  font-size: 18px;
+  color: khaki;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .coin-details {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-top: 5px;
 }
 
-.coin-name {
-  color: rgb(220, 211, 34);
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+
+
 
 .coin-details p {
   margin: 2px 0;
 }
+
+.coin-details h5{
+  color: rgb(6, 149, 32);
+  font-size: 22px;
+  font-weight: 300;
+
+}
+
 
 /* Order and history styling */
 .order,
@@ -182,7 +210,7 @@ onMounted(() => {
 }
 
 .connected-wallet {
- 
+
   align-items: center;
   margin-bottom: 15px;
   /* Adds some space below for better spacing */
@@ -194,8 +222,8 @@ onMounted(() => {
 }
 
 .connected-wallet img {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 }
 
 

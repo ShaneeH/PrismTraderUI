@@ -26,7 +26,8 @@ export const getCoins = async (ca) => {
       mc: formatNumber(item.mc), // Market Cap
       qty: formatNumber(item.qty), // Quantity
       holdings: formatNumber(item.holdings), // Holdings, if applicable
-    }));
+      balance: item.balance.toFixed(2)
+    })).sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
 
     return formattedData;
   } catch (err) {
